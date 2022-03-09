@@ -3,6 +3,7 @@ import { LabeledTextField } from "app/core/components/LabeledTextField"
 import { Form, FORM_ERROR } from "app/core/components/Form"
 import signup from "app/auth/mutations/signup"
 import { Signup } from "app/auth/validations"
+import { Typography } from "@mui/material"
 
 type SignupFormProps = {
   onSuccess?: () => void
@@ -13,8 +14,9 @@ export const SignupForm = (props: SignupFormProps) => {
 
   return (
     <div>
-      <h1>Create an Account</h1>
-
+      <Typography textAlign="center" variant="h2" component="h1">
+        Sign Up
+      </Typography>
       <Form
         submitText="Create Account"
         schema={Signup}
@@ -33,8 +35,28 @@ export const SignupForm = (props: SignupFormProps) => {
           }
         }}
       >
-        <LabeledTextField name="email" label="Email" placeholder="Email" />
-        <LabeledTextField name="password" label="Password" placeholder="Password" type="password" />
+        <LabeledTextField
+          //@ts-ignore
+          margin="normal"
+          required
+          fullWidth
+          id="email"
+          label="Email Address"
+          name="email"
+          autoComplete="email"
+          autoFocus
+        />
+
+        <LabeledTextField
+          //@ts-ignore
+          margin="normal"
+          required
+          fullWidth
+          name="password"
+          label="Password"
+          type="password"
+          id="password"
+        />
       </Form>
     </div>
   )

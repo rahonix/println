@@ -20,7 +20,7 @@ export const LoginForm = (props: LoginFormProps) => {
       <Form
         submitText="Login"
         schema={Login}
-        initialValues={{ email: "Hi", password: "" }}
+        initialValues={{ email: "", password: "" }}
         onSubmit={async (values) => {
           try {
             const user = await loginMutation(values)
@@ -62,11 +62,11 @@ export const LoginForm = (props: LoginFormProps) => {
         />
       </Form>
       <Grid container>
-        <Grid item xs>
-          <Link href={Routes.SignupPage()}>Forgot password?</Link>
-        </Grid>
+        {/* <Grid item xs>
+          <Link href={Routes.ForgotPasswordPage()}>Forgot password?</Link>
+        </Grid> */}
         <Grid item>
-          <Link href={Routes.ForgotPasswordPage()}>{"Don't have an account? Sign Up"}</Link>
+          <Link href={Routes.SignupPage()}>{"Don't have an account? Sign Up"}</Link>
         </Grid>
       </Grid>
     </div>

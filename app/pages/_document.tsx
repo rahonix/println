@@ -7,7 +7,7 @@ import {
   Html,
   Main,
 } from "blitz"
-import { Children } from "react"
+import { Children, Suspense } from "react"
 import createEmotionServer from "@emotion/server/create-instance"
 import { lightTheme } from "app/core/styles/theme"
 import createEmotionCache from "app/core/utils/createEmotionCache"

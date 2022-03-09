@@ -1,18 +1,25 @@
 import { useRouter, BlitzPage, Routes } from "blitz"
-import Layout from "app/core/layouts/Layout"
+import VerticalCenteredLayout from "app/core/layouts/VerticalCenteredLayout"
 import { SignupForm } from "app/auth/components/SignupForm"
+import { Grid } from "@mui/material"
 
 const SignupPage: BlitzPage = () => {
   const router = useRouter()
 
   return (
-    <div>
-      <SignupForm onSuccess={() => router.push(Routes.Home())} />
-    </div>
+    <>
+      <Grid container alignItems={"center"} justifyContent={"center"}>
+        <Grid marginBottom={20} xs={10} md={6} lg={3} item>
+          <SignupForm onSuccess={() => router.push(Routes.Home())} />
+        </Grid>
+      </Grid>
+    </>
   )
 }
 
 SignupPage.redirectAuthenticatedTo = "/"
-SignupPage.getLayout = (page) => <Layout title="Sign Up">{page}</Layout>
+SignupPage.getLayout = (page) => (
+  <VerticalCenteredLayout title="Sign Up">{page}</VerticalCenteredLayout>
+)
 
 export default SignupPage

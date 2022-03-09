@@ -1,5 +1,4 @@
 import * as React from "react"
-import AppBar from "@mui/material/AppBar"
 import Box from "@mui/material/Box"
 import Toolbar from "@mui/material/Toolbar"
 import Typography from "@mui/material/Typography"
@@ -7,7 +6,38 @@ import Button from "@mui/material/Button"
 import IconButton from "@mui/material/IconButton"
 import MenuIcon from "@mui/icons-material/Menu"
 import { Container } from "@mui/material"
-import { Link, Routes } from "blitz"
+import { Link, Routes, useMutation } from "blitz"
+import logout from "app/auth/mutations/logout"
+import { useCurrentUser } from "../hooks/useCurrentUser"
+import { Suspense } from "react"
+
+const UserInfo = () => {
+  const currentUser = useCurrentUser()
+  const [logoutMutation] = useMutation(logout)
+
+  if (currentUser) {
+    return (
+      <>
+        <Button
+          color="inherit"
+          onClick={async () => {
+            await logoutMutation()
+          }}
+        >
+          Logout
+        </Button>
+      </>
+    )
+  } else {
+    return (
+      <>
+        <Link href={Routes.LoginPage()}>
+          <Button color="inherit">Login</Button>
+        </Link>
+      </>
+    )
+  }
+}
 
 export default function NavigationBar() {
   return (
@@ -18,9 +48,9 @@ export default function NavigationBar() {
             <IconButton size="large" edge="start" color="inherit" aria-label="menu" sx={{ mr: 2 }}>
               <MenuIcon />
             </IconButton>
-            <Link href={Routes.LoginPage()}>
-              <Button color="inherit">Login</Button>
-            </Link>
+            <Suspense fallback="Loading...">
+              <UserInfo />
+            </Suspense>
           </Toolbar>
         </Typography>
       </Container>
