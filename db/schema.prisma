@@ -23,6 +23,7 @@ model User {
 
   tokens   Token[]
   sessions Session[]
+  boards   Board[]
 }
 
 model Session {
@@ -63,3 +64,22 @@ model Token {
 // enum TokenType {
 //   RESET_PASSWORD
 // }
+
+model Board {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  name      String
+  user      User     @relation(fields: [userId], references: [id])
+  userId    Int
+  entries   Entry[]
+}
+
+model Entry {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  text      String
+  board     Board    @relation(fields: [boardId], references: [id])
+  boardId   Int
+}

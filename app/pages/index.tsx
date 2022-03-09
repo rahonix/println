@@ -65,8 +65,7 @@ const Home: BlitzPage = () => {
               </Grid>
               <Grid
                 className="hero-section__preview"
-                container
-                xs={12}
+                item
                 md={5}
                 alignItems="center"
                 justifyContent="center"

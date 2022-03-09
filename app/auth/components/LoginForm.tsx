@@ -3,6 +3,7 @@ import { LabeledTextField } from "app/core/components/LabeledTextField"
 import { Form, FORM_ERROR } from "app/core/components/Form"
 import login from "app/auth/mutations/login"
 import { Login } from "app/auth/validations"
+import { Box, Button, Grid, TextField, Typography } from "@mui/material"
 
 type LoginFormProps = {
   onSuccess?: (user: PromiseReturnType<typeof login>) => void
@@ -13,12 +14,13 @@ export const LoginForm = (props: LoginFormProps) => {
 
   return (
     <div>
-      <h1>Login</h1>
-
+      <Typography textAlign="center" variant="h2" component="h1">
+        Login
+      </Typography>
       <Form
         submitText="Login"
         schema={Login}
-        initialValues={{ email: "", password: "" }}
+        initialValues={{ email: "Hi", password: "" }}
         onSubmit={async (values) => {
           try {
             const user = await loginMutation(values)
@@ -35,18 +37,38 @@ export const LoginForm = (props: LoginFormProps) => {
           }
         }}
       >
-        <LabeledTextField name="email" label="Email" placeholder="Email" />
-        <LabeledTextField name="password" label="Password" placeholder="Password" type="password" />
-        <div>
-          <Link href={Routes.ForgotPasswordPage()}>
-            <a>Forgot your password?</a>
-          </Link>
-        </div>
-      </Form>
+        <LabeledTextField
+          //@ts-ignore
+          margin="normal"
+          required
+          fullWidth
+          id="email"
+          label="Email Address"
+          name="email"
+          autoComplete="email"
+          autoFocus
+        />
 
-      <div style={{ marginTop: "1rem" }}>
-        Or <Link href={Routes.SignupPage()}>Sign Up</Link>
-      </div>
+        <LabeledTextField
+          //@ts-ignore
+          margin="normal"
+          required
+          fullWidth
+          name="password"
+          label="Password"
+          type="password"
+          id="password"
+          autoComplete="current-password"
+        />
+      </Form>
+      <Grid container>
+        <Grid item xs>
+          <Link href={Routes.SignupPage()}>Forgot password?</Link>
+        </Grid>
+        <Grid item>
+          <Link href={Routes.ForgotPasswordPage()}>{"Don't have an account? Sign Up"}</Link>
+        </Grid>
+      </Grid>
     </div>
   )
 }
