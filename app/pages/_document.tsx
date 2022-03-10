@@ -9,7 +9,7 @@ import {
 } from "blitz"
 import { Children, Suspense } from "react"
 import createEmotionServer from "@emotion/server/create-instance"
-import { lightTheme } from "app/core/styles/theme"
+import { theme } from "app/core/styles/theme"
 import createEmotionCache from "app/core/utils/createEmotionCache"
 
 export default class MyDocument extends Document {
@@ -75,7 +75,7 @@ export default class MyDocument extends Document {
       <Html lang="en">
         <DocumentHead>
           {/* PWA primary color */}
-          <meta name="theme-color" content={lightTheme.palette.primary.main} />
+          <meta name="theme-color" content={theme.palette.primary.main} />
           <link
             rel="stylesheet"
             href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"

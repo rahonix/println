@@ -1,6 +1,6 @@
 import { Head, BlitzLayout } from "blitz"
 
-const CenteredLayout: BlitzLayout<{ title?: string }> = ({ title, children }) => {
+const VerticalCenteredLayout: BlitzLayout<{ title?: string }> = ({ title, children }) => {
   return (
     <>
       <Head>
@@ -22,4 +22,4 @@ const CenteredLayout: BlitzLayout<{ title?: string }> = ({ title, children }) =>
   )
 }
 
-export default CenteredLayout
+export default VerticalCenteredLayout

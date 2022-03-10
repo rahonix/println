@@ -12,7 +12,7 @@ import LoginForm from "app/auth/components/LoginForm"
 import { ThemeProvider } from "@mui/material/styles"
 import CssBaseline from "@mui/material/CssBaseline"
 import { CacheProvider, EmotionCache } from "@emotion/react"
-import { lightTheme } from "app/core/styles/theme"
+import { theme } from "app/core/styles/theme"
 import createEmotionCache from "app/core/utils/createEmotionCache"
 interface MyAppProps extends AppProps {
   emotionCache?: EmotionCache
@@ -30,7 +30,7 @@ export default function App({
 
   return (
     <CacheProvider value={emotionCache}>
-      <ThemeProvider theme={lightTheme}>
+      <ThemeProvider theme={theme}>
         <CssBaseline />
         <ErrorBoundary
           FallbackComponent={RootErrorFallback}
