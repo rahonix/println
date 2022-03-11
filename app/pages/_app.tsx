@@ -14,6 +14,7 @@ import CssBaseline from "@mui/material/CssBaseline"
 import { CacheProvider, EmotionCache } from "@emotion/react"
 import { theme } from "app/core/styles/theme"
 import createEmotionCache from "app/core/utils/createEmotionCache"
+import NiceModal from "@ebay/nice-modal-react"
 interface MyAppProps extends AppProps {
   emotionCache?: EmotionCache
 }
@@ -31,13 +32,15 @@ export default function App({
   return (
     <CacheProvider value={emotionCache}>
       <ThemeProvider theme={theme}>
-        <CssBaseline />
-        <ErrorBoundary
-          FallbackComponent={RootErrorFallback}
-          onReset={useQueryErrorResetBoundary().reset}
-        >
-          {getLayout(<Component {...pageProps} />)}
-        </ErrorBoundary>
+        <NiceModal.Provider>
+          <CssBaseline />
+          <ErrorBoundary
+            FallbackComponent={RootErrorFallback}
+            onReset={useQueryErrorResetBoundary().reset}
+          >
+            {getLayout(<Component {...pageProps} />)}
+          </ErrorBoundary>
+        </NiceModal.Provider>
       </ThemeProvider>
     </CacheProvider>
   )

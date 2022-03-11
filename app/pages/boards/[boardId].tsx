@@ -6,14 +6,14 @@ import deleteBoard from "app/boards/mutations/deleteBoard"
 
 export const Board = () => {
   const router = useRouter()
-  const boardId = useParam("boardId", "number")
+  const boardId = useParam("boardId", "string")
   const [deleteBoardMutation] = useMutation(deleteBoard)
   const [board] = useQuery(getBoard, { id: boardId })
 
   return (
     <>
       <Head>
-        <title>Board {board.id}</title>
+        <title>Board {board.name}</title>
       </Head>
 
       <div>

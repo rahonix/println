@@ -1,40 +1,77 @@
 import { useEffect } from "react"
 import { useRouter } from "next/router"
 import PropTypes from "prop-types"
-import { Box, Button, Divider, Drawer, Theme, Typography, useMediaQuery } from "@mui/material"
+import {
+  Box,
+  Button,
+  Divider,
+  Drawer,
+  SvgIconTypeMap,
+  Theme,
+  Typography,
+  useMediaQuery,
+} from "@mui/material"
 import { useTheme } from "@emotion/react"
 
 import { Selector as SelectorIcon } from "app/core/icons/selector"
 import { ChartBar as ChartBarIcon } from "app/core/icons/chart-bar"
-import { Cog as CogIcon } from "app/core/icons/cog"
-import { Lock as LockIcon } from "app/core/icons/lock"
-import { ShoppingBag as ShoppingBagIcon } from "app/core/icons/shopping-bag"
-import { User as UserIcon } from "app/core/icons/user"
-import { UserAdd as UserAddIcon } from "app/core/icons/user-add"
-import { Users as UsersIcon } from "app/core/icons/users"
-import { XCircle as XCircleIcon } from "app/core/icons/x-circle"
+import AddIcon from "@mui/icons-material/Add"
+import DashboardIcon from "@mui/icons-material/Dashboard"
+import ViewComfyIcon from "@mui/icons-material/ViewComfy"
 
-import { NavItem } from "./NavItem"
+import { NavItemLink } from "./NavItemLink"
+import NestedNavList from "./NestedNavList"
+import { Routes, RouteUrlObject } from "blitz"
+import { useModal } from "@ebay/nice-modal-react"
+import BoardCreateModal from "app/boards/modals/CreateModal"
+import { OverridableComponent } from "@mui/material/OverridableComponent"
+import { NavItemButton } from "./NavItemButton"
 
-const items = [
-  {
-    href: "/",
-    icon: <ChartBarIcon fontSize="small" />,
-    title: "Dashboard",
-  },
-  {
-    href: "/boards",
-    icon: <UsersIcon fontSize="small" />,
-    title: "Boards",
-  },
-]
+type NavItem = {
+  type: "link" | "list"
+  title: string
+  icon: any
+  // MUTUAL EXCLUSIVE PRETTY PLEASE TODO: Theer is an ts-xor package which implement this behaviour
+  href?: RouteUrlObject
+  onClick?: () => void
+  links?: NavItem[]
+}
 
 export const Sidebar = (props) => {
   const { open, onClose } = props
   const router = useRouter()
   const theme = useTheme()
+  const modal = useModal(BoardCreateModal)
   //@ts-ignore TODO: Apparantly my theme is illegal
   const lgUp = useMediaQuery(theme.breakpoints.up("lg"))
+
+  const items: NavItem[] = [
+    {
+      type: "link",
+      title: "Dashboard",
+      href: Routes.Dashboard(),
+      icon: <ChartBarIcon fontSize="small" />,
+    },
+    {
+      type: "list",
+      title: "Boards",
+      icon: <DashboardIcon fontSize="small" />,
+      links: [
+        {
+          type: "link",
+          title: "View",
+          href: Routes.BoardsPage(),
+          icon: <ViewComfyIcon fontSize="small" />,
+        },
+        {
+          type: "link",
+          title: "Create",
+          onClick: () => modal.show(),
+          icon: <AddIcon fontSize="small" />,
+        },
+      ],
+    },
+  ]
 
   useEffect(
     () => {
@@ -99,11 +136,51 @@ export const Sidebar = (props) => {
           }}
         />
         <Box sx={{ flexGrow: 1 }}>
-          {items.map((item) => (
-            <NavItem key={item.title} icon={item.icon} href={item.href} title={item.title} />
-          ))}
+          {items.map((item) => {
+            if (item.type === "link") {
+              if (item.hasOwnProperty("href"))
+                return (
+                  <NavItemLink
+                    key={item.title}
+                    icon={item.icon}
+                    href={item.href!.pathname}
+                    title={item.title}
+                  />
+                )
+              return (
+                <NavItemButton
+                  key={item.title}
+                  icon={item.icon}
+                  onClick={item.onClick}
+                  title={item.title}
+                />
+              )
+            }
+            return (
+              <NestedNavList key={item.title} icon={item.icon} title={"Boards"} collapsed>
+                {item.links!.map((link) => {
+                  if (link.hasOwnProperty("href"))
+                    return (
+                      <NavItemLink
+                        key={link.title}
+                        icon={link.icon}
+                        href={link.href!.pathname}
+                        title={link.title}
+                      />
+                    )
+                  return (
+                    <NavItemButton
+                      key={link.title}
+                      icon={link.icon}
+                      onClick={link.onClick}
+                      title={link.title}
+                    />
+                  )
+                })}
+              </NestedNavList>
+            )
+          })}
         </Box>
-
         <Divider sx={{ borderColor: "#2D3748" }} />
         <Box
           sx={{
@@ -127,9 +204,7 @@ export const Sidebar = (props) => {
                 width: "100%",
               },
             }}
-          >
-            <img alt="Go to pro" src="/static/images/sidebar_pro.png" />
-          </Box>
+          ></Box>
         </Box>
       </Box>
     </>

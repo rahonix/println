@@ -19,7 +19,6 @@ export const LabeledTextField = forwardRef<HTMLInputElement, LabeledTextFieldPro
     } = useField(name)
 
     const normalizedError = Array.isArray(error) ? error.join(", ") : error || submitError
-    console.log(props)
     return (
       <>
         <Field name={name}>

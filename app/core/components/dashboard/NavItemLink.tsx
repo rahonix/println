@@ -1,10 +1,10 @@
 import NextLink from "next/link"
 import { useRouter } from "next/router"
 import PropTypes from "prop-types"
-import { Box, Button, ListItem } from "@mui/material"
+import { Box, Button, ListItem, Typography } from "@mui/material"
 
-export const NavItem = (props) => {
-  const { href, icon, title, ...others } = props
+export const NavItemLink = (props) => {
+  const { href, icon, title, onClick, ...others } = props
   const router = useRouter()
   const active = href ? router.pathname === href : false
 
@@ -43,14 +43,17 @@ export const NavItem = (props) => {
             },
           }}
         >
-          <Box sx={{ flexGrow: 1 }}>{title}</Box>
+          <Box sx={{ flexGrow: 1 }}>
+            {/* TODO: Align Text */}
+            <Typography justifyContent={"center"}>{title}</Typography>
+          </Box>
         </Button>
       </NextLink>
     </ListItem>
   )
 }
 
-NavItem.propTypes = {
+NavItemLink.propTypes = {
   href: PropTypes.string,
   icon: PropTypes.node,
   title: PropTypes.string,

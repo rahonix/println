@@ -14,9 +14,6 @@ export const LoginForm = (props: LoginFormProps) => {
 
   return (
     <div>
-      <Typography textAlign="center" variant="h2" component="h1">
-        Login
-      </Typography>
       <Form
         submitText="Login"
         schema={Login}

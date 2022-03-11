@@ -39,6 +39,7 @@
     "zod": "3.13.4"
   },
   "devDependencies": {
+    "@ebay/nice-modal-react": "1.2.1",
     "@types/preview-email": "2.0.1",
     "@types/react": "17.0.39",
     "eslint": "7.32.0",

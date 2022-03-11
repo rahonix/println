@@ -6,7 +6,16 @@ export { FORM_ERROR } from "app/core/components/Form"
 export function BoardForm<S extends z.ZodType<any, any>>(props: FormProps<S>) {
   return (
     <Form<S> {...props}>
-      <LabeledTextField name="name" placeholder="Name" />
+      <LabeledTextField
+        //@ts-ignore
+        margin="normal"
+        required
+        fullWidth
+        name="name"
+        label="Name"
+        type="text"
+        id="name"
+      />
     </Form>
   )
 }

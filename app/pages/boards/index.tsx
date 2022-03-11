@@ -1,14 +1,18 @@
 import { Suspense } from "react"
-import { Head, Link, usePaginatedQuery, useRouter, BlitzPage, Routes } from "blitz"
+import { Head, Link, usePaginatedQuery, useRouter, BlitzPage, Routes, useSession } from "blitz"
 import Layout from "app/core/layouts/Layout"
 import getBoards from "app/boards/queries/getBoards"
 
 const ITEMS_PER_PAGE = 100
 
 export const BoardsList = () => {
+  const session = useSession()
   const router = useRouter()
   const page = Number(router.query.page) || 0
   const [{ boards, hasMore }] = usePaginatedQuery(getBoards, {
+    where: {
+      userId: session.userId!,
+    },
     orderBy: { id: "asc" },
     skip: ITEMS_PER_PAGE * page,
     take: ITEMS_PER_PAGE,
