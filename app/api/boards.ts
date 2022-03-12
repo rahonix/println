@@ -1,12 +1,7 @@
-import {
-  BlitzApiRequest,
-  BlitzApiResponse,
-  getAntiCSRFToken,
-  getSession,
-  invokeWithMiddleware,
-  useMutation,
-} from "blitz"
-import createEntry from "app/entries/mutations/createEntry"
+import { BlitzApiRequest, BlitzApiResponse } from "blitz"
+
+import db from "db"
+import { CreateEntrySchema } from "app/entries/validations"
 
 const handler = async (req: BlitzApiRequest, res: BlitzApiResponse) => {
   res.statusCode = 400
@@ -14,17 +9,11 @@ const handler = async (req: BlitzApiRequest, res: BlitzApiResponse) => {
     return res.end()
   }
   try {
-    const antiCSRFToken = getAntiCSRFToken()
-    console.log(antiCSRFToken)
-    if (!antiCSRFToken) {
-      return res.end()
-    }
-    req.headers["anti-csrf"] = antiCSRFToken
-    await invokeWithMiddleware(createEntry, JSON.parse(req.body), { req, res })
-    req.statusCode = 200
-    res.end(JSON.stringify({ name: "John Doe" }))
+    const data = CreateEntrySchema.parse(JSON.parse(req.body))
+    await db.entry.create({ data: data })
+    res.statusCode = 200
+    return res.end()
   } catch (err) {
-    console.log(err)
     return res.end()
   }
 }

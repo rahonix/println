@@ -10,7 +10,7 @@ const SignupPage: BlitzPage = () => {
     <>
       <Grid container alignItems={"center"} justifyContent={"center"}>
         <Grid marginBottom={20} xs={6} lg={3} item>
-          <SignupForm onSuccess={() => router.push(Routes.Home())} />
+          <SignupForm onSuccess={() => router.push(Routes.Dashboard())} />
         </Grid>
       </Grid>
     </>
