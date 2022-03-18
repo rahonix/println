@@ -220,6 +220,7 @@ export const Sidebar = (props) => {
             backgroundColor: "neutral.900",
             color: "primary.contrastText",
             width: 280,
+            borderRight: 0,
           },
         }}
         variant="permanent"

@@ -1,35 +1,41 @@
-import { Suspense } from "react"
+import { Suspense, useEffect, useRef } from "react"
 import { Head, Link, useRouter, useQuery, useParam, BlitzPage, useMutation, Routes } from "blitz"
 import getBoard from "app/boards/queries/getBoard"
-import deleteBoard from "app/boards/mutations/deleteBoard"
 import { DashboardLayout } from "app/core/layouts/DashboardLayout"
 import getEntries from "app/entries/queries/getEntries"
+import { Plain, Termynal } from "react-termynal"
 
 export const Board = () => {
   const boardId = useParam("boardId", "string")
   const [board] = useQuery(getBoard, { id: boardId })
-  const [{ entries, hasMore }] = useQuery(getEntries, { where: { boardId: boardId } })
+  const [{ entries }, { refetch }] = useQuery(
+    getEntries,
+    { where: { boardId: boardId } },
+    { refetchInterval: 5000 }
+  )
+
   return (
-    <>
+    <div style={{ position: "relative", height: "100%" }}>
+      {console.log(entries)}
       <Head>
         <title>Board {board.name}</title>
       </Head>
-      <main>
-        {entries.map((entry) => {
-          return <div key={entry.id}>{entry.text}</div>
-        })}
-      </main>
-    </>
+      <Termynal>
+        {entries.map((entry) => (
+          <Plain key={entry.id}>
+            <p>{entry.text}</p>
+          </Plain>
+        ))}
+      </Termynal>
+    </div>
   )
 }
 
 const ShowBoardPage: BlitzPage = () => {
   return (
-    <div>
-      <Suspense fallback={<div>Loading...</div>}>
-        <Board />
-      </Suspense>
-    </div>
+    <Suspense fallback={<div>Loading...</div>}>
+      <Board />
+    </Suspense>
   )
 }
 
