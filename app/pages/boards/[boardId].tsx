@@ -20,7 +20,7 @@ export const Board = () => {
       <Head>
         <title>Board {board.name}</title>
       </Head>
-      <Termynal>
+      <Termynal id="placeholder" name="bash">
         {entries.map((entry) => (
           <Plain key={entry.id}>
             <p>{entry.text}</p>

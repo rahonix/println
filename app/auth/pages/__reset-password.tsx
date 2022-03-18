@@ -17,7 +17,7 @@ const ResetPasswordPage: BlitzPage = () => {
         <div>
           <h2>Password Reset Successfully</h2>
           <p>
-            Go to the <Link href={Routes.Home()}>homepage</Link>
+            Go to the <Link href={Routes.Dashboard()}>homepage</Link>
           </p>
         </div>
       ) : (
@@ -41,12 +41,8 @@ const ResetPasswordPage: BlitzPage = () => {
             }
           }}
         >
-          <LabeledTextField name="password" label="New Password" type="password" />
-          <LabeledTextField
-            name="passwordConfirmation"
-            label="Confirm New Password"
-            type="password"
-          />
+          <LabeledTextField name="password" type="password" />
+          <LabeledTextField name="passwordConfirmation" type="password" />
         </Form>
       )}
     </div>

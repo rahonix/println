@@ -7,7 +7,7 @@ import { BoardForm, FORM_ERROR } from "app/boards/components/BoardForm"
 
 export const EditBoard = () => {
   const router = useRouter()
-  const boardId = useParam("boardId", "number")
+  const boardId = useParam("boardId", "string")
   const [board, { setQueryData }] = useQuery(
     getBoard,
     { id: boardId },
