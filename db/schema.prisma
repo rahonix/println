@@ -2,7 +2,7 @@
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
 datasource db {
-  provider = "sqlite"
+  provider = "postgres"
   url      = env("DATABASE_URL")
 }
 
@@ -76,10 +76,18 @@ model Board {
 }
 
 model Entry {
-  id        Int      @id @default(autoincrement())
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id        Int       @id @default(autoincrement())
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
   text      String
-  board     Board    @relation(fields: [boardId], references: [id])
+  type      EntryType @default(TEXT)
+  board     Board     @relation(fields: [boardId], references: [id])
   boardId   String
+}
+
+enum EntryType {
+  TEXT
+  WARNING
+  INFO
+  ERROR
 }
