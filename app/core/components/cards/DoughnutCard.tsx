@@ -17,6 +17,7 @@ const DoughnutCard = ({ entries }: DoughnutCardProps) => {
   const data = {
     //@ts-ignore
     labels: [...Object.keys(entryGroupedByType)].map(
+      // @ts-ignore
       ([first, ...rest]) => first + rest.join("").toLowerCase()
     ),
     datasets: [
