@@ -39,7 +39,7 @@
     "react-chartjs-2": "4.0.1",
     "react-dom": "18.0.0-alpha-5ca4b0433-20211020",
     "react-final-form": "6.5.8",
-    "react-termynal": "0.0.3-f",
+    "react-termynal": "0.0.3-g",
     "zod": "3.13.4"
   },
   "devDependencies": {

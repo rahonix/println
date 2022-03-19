@@ -3,7 +3,7 @@ import { Head, useQuery, useParam, BlitzPage, Routes } from "blitz"
 import getBoard from "app/boards/queries/getBoard"
 import { DashboardLayout } from "app/core/layouts/DashboardLayout"
 import getEntries from "app/entries/queries/getEntries"
-import { Plain, Termynal } from "react-termynal"
+import { Dots, Plain, Termynal, Title } from "react-termynal"
 import {
   Accordion,
   AccordionSummary,
@@ -49,82 +49,12 @@ export const Board = () => {
   const [anchorElement, setAnchorElement] = useState<any>(null)
 
   return (
-    <Stack paddingTop={3} spacing={1} height="100%">
+    <Stack spacing={1} height="100%">
       <Head>
         <title>Board {board.name}</title>
       </Head>
-      <Grid container>
-        <Grid item xs={10} md={10}>
-          <Typography textAlign={"center"} variant="h2" component="h1" paddingLeft={"22%"}>
-            {board.name}
-          </Typography>
-        </Grid>
-        <Grid item xs={2} display="flex" alignItems="center" justifyContent="end" paddingRight={2}>
-          <>
-            {mdUp ? (
-              <BoardContextMenu
-                open={open}
-                setOpen={setOpen}
-                anchorEl={anchorElement}
-                setAnchorEl={setAnchorElement}
-              >
-                <MenuItem>
-                  <ListItemIcon>
-                    <SettingsIcon fontSize="small" />
-                  </ListItemIcon>
-                  Settings
-                </MenuItem>
-                {/* TODO: Styled when pressed */}
-                <a onClick={(event) => exportJson(event.currentTarget, entries, board.name)}>
-                  <MenuItem>
-                    <ListItemIcon>
-                      <FileDownloadIcon fontSize="small" />
-                    </ListItemIcon>
-                    Export
-                  </MenuItem>
-                </a>
-                <MenuItem onClick={() => modal.show({ boardId: boardId })}>
-                  <ListItemIcon>
-                    <DeleteIcon fontSize="small" />
-                  </ListItemIcon>
-                  <ListItemText primary={<Typography color={"error.main"}>Delete</Typography>} />
-                </MenuItem>
-              </BoardContextMenu>
-            ) : (
-              <BoardContextDrawer open={open} setOpen={setOpen}>
-                <Box>
-                  <List>
-                    <ListItem button>
-                      <ListItemIcon>
-                        <SettingsIcon fontSize="small" />
-                      </ListItemIcon>
-                      <ListItemText primary={"Settings"} />
-                    </ListItem>
-                    {/* TODO: Styled when pressed */}
-                    <a onClick={(event) => exportJson(event.currentTarget, entries, board.name)}>
-                      <ListItem button>
-                        <ListItemIcon>
-                          <FileDownloadIcon fontSize="small" />
-                        </ListItemIcon>
-                        <ListItemText primary={"Export"} />
-                      </ListItem>
-                    </a>
-                    <ListItem button onClick={() => modal.show()}>
-                      <ListItemIcon>
-                        <DeleteIcon fontSize="small" />
-                      </ListItemIcon>
-                      <ListItemText
-                        primary={<Typography color={"error.main"}>Delete</Typography>}
-                      />
-                    </ListItem>
-                  </List>
-                </Box>
-              </BoardContextDrawer>
-            )}
-          </>
-        </Grid>
-      </Grid>
-      <Accordion>
+
+      {/* <Accordion>
         <AccordionSummary
           expandIcon={<ExpandMoreIcon />}
           aria-controls="panella-content"
@@ -142,9 +72,81 @@ export const Board = () => {
             </Grid>
           </Grid>
         </AccordionSummary>
-      </Accordion>
+      </Accordion> */}
       <div style={{ position: "relative", height: "100%" }}>
-        <Termynal>
+        <Termynal
+          header={
+            <>
+              <Title text={board.name} />
+              <div style={{ paddingRight: "2rem" }}>
+                {mdUp ? (
+                  <BoardContextMenu
+                    open={open}
+                    setOpen={setOpen}
+                    anchorEl={anchorElement}
+                    setAnchorEl={setAnchorElement}
+                  >
+                    <MenuItem>
+                      <ListItemIcon>
+                        <SettingsIcon fontSize="small" />
+                      </ListItemIcon>
+                      Settings
+                    </MenuItem>
+                    {/* TODO: Styled when pressed */}
+                    <a onClick={(event) => exportJson(event.currentTarget, entries, board.name)}>
+                      <MenuItem>
+                        <ListItemIcon>
+                          <FileDownloadIcon fontSize="small" />
+                        </ListItemIcon>
+                        Export
+                      </MenuItem>
+                    </a>
+                    <MenuItem onClick={() => modal.show({ boardId: boardId })}>
+                      <ListItemIcon>
+                        <DeleteIcon fontSize="small" />
+                      </ListItemIcon>
+                      <ListItemText
+                        primary={<Typography color={"error.main"}>Delete</Typography>}
+                      />
+                    </MenuItem>
+                  </BoardContextMenu>
+                ) : (
+                  <BoardContextDrawer open={open} setOpen={setOpen}>
+                    <Box>
+                      <List>
+                        <ListItem button>
+                          <ListItemIcon>
+                            <SettingsIcon fontSize="small" />
+                          </ListItemIcon>
+                          <ListItemText primary={"Settings"} />
+                        </ListItem>
+                        {/* TODO: Styled when pressed */}
+                        <a
+                          onClick={(event) => exportJson(event.currentTarget, entries, board.name)}
+                        >
+                          <ListItem button>
+                            <ListItemIcon>
+                              <FileDownloadIcon fontSize="small" />
+                            </ListItemIcon>
+                            <ListItemText primary={"Export"} />
+                          </ListItem>
+                        </a>
+                        <ListItem button onClick={() => modal.show()}>
+                          <ListItemIcon>
+                            <DeleteIcon fontSize="small" />
+                          </ListItemIcon>
+                          <ListItemText
+                            primary={<Typography color={"error.main"}>Delete</Typography>}
+                          />
+                        </ListItem>
+                      </List>
+                    </Box>
+                  </BoardContextDrawer>
+                )}
+              </div>
+            </>
+          }
+        >
           {entries.map((entry, index) => (
             <Plain lineNumber={index + 1} key={entry.id}>
               <Typography color={entry.type.toLowerCase() + ".main"}>{entry.text}</Typography>
