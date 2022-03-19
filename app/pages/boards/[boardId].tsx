@@ -152,26 +152,14 @@ export const Board = () => {
       </AccordionSummary>
       <Drawer anchor={"bottom"} open={statisticsOpen} onClose={() => setStatisticsOpen(false)}>
         <Grid container>
-          <Grid paddingLeft={"1rem"} item xs={12} md={6}>
+          {/* <Grid paddingLeft={"1rem"} item xs={12} md={6}>
             <DoughnutCard entries={entries} />
-          </Grid>
+          </Grid> */}
           <Grid item xs={12} md={6}>
             <LineCard entries={entries} />
           </Grid>
         </Grid>
       </Drawer>
-      {/* <Accordion>
-          <AccordionSummary>
-            <Grid container>
-              <Grid paddingLeft={"1rem"} item xs={12} md={6}>
-                <DoughnutCard entries={entries} />
-              </Grid>
-              <Grid item xs={12} md={6}>
-                <LineCard entries={entries} />
-              </Grid>
-            </Grid>
-          </AccordionSummary>
-        </Accordion> */}
     </Stack>
   )
 }
