@@ -5,6 +5,8 @@ import { DashboardLayout } from "app/core/layouts/DashboardLayout"
 import getEntries from "app/entries/queries/getEntries"
 import { Plain, Termynal } from "react-termynal"
 import {
+  Accordion,
+  AccordionSummary,
   Backdrop,
   Box,
   CircularProgress,
@@ -29,6 +31,7 @@ import DeleteIcon from "@mui/icons-material/Delete"
 import exportJson from "app/core/utils/exportJson"
 import BoardDeleteModal from "app/boards/modals/BoardDeleteModal"
 import { useModal } from "@ebay/nice-modal-react"
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore"
 
 export const Board = () => {
   const theme = useTheme()
@@ -121,15 +124,26 @@ export const Board = () => {
           </>
         </Grid>
       </Grid>
-      <Grid container>
-        <Grid paddingLeft={"1rem"} item xs={12} md={6}>
-          <DoughnutCard entries={entries} />
-        </Grid>
-        <Grid item xs={12} md={6}>
-          <LineCard entries={entries} />
-        </Grid>
-      </Grid>
-      <div style={{ position: "relative", height: "100%", padding: "0 1rem 1rem" }}>
+      <Accordion>
+        <AccordionSummary
+          expandIcon={<ExpandMoreIcon />}
+          aria-controls="panella-content"
+          id="panella-content"
+        >
+          <Typography>Statistics</Typography>
+        </AccordionSummary>
+        <AccordionSummary>
+          <Grid container>
+            <Grid paddingLeft={"1rem"} item xs={12} md={6}>
+              <DoughnutCard entries={entries} />
+            </Grid>
+            <Grid item xs={12} md={6}>
+              <LineCard entries={entries} />
+            </Grid>
+          </Grid>
+        </AccordionSummary>
+      </Accordion>
+      <div style={{ position: "relative", height: "100%" }}>
         <Termynal>
           {entries.map((entry, index) => (
             <Plain lineNumber={index + 1} key={entry.id}>

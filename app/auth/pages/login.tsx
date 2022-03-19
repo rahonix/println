@@ -9,7 +9,7 @@ const LoginPage: BlitzPage = () => {
   return (
     <>
       <Grid container alignItems={"center"} justifyContent={"center"}>
-        <Grid marginBottom={20} xs={6} lg={3} item>
+        <Grid marginBottom={20} xs={10} lg={3} item>
           <Typography textAlign="center" variant="h2" component="h1">
             Login
           </Typography>

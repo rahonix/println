@@ -71,7 +71,6 @@ const LineCard = ({ entries }: LineCardProps) => {
           justifyContent="center"
           sx={{
             display: "flex",
-            height: "300px",
             position: "relative",
           }}
         >
