@@ -10,6 +10,7 @@ import {
   Backdrop,
   Box,
   CircularProgress,
+  Drawer,
   Grid,
   List,
   ListItem,
@@ -31,7 +32,7 @@ import DeleteIcon from "@mui/icons-material/Delete"
 import exportJson from "app/core/utils/exportJson"
 import BoardDeleteModal from "app/boards/modals/BoardDeleteModal"
 import { useModal } from "@ebay/nice-modal-react"
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore"
+import ExpandLessIcon from "@mui/icons-material/ExpandLess"
 
 export const Board = () => {
   const theme = useTheme()
@@ -48,37 +49,20 @@ export const Board = () => {
   const [open, setOpen] = useState<boolean>(false)
   const [anchorElement, setAnchorElement] = useState<any>(null)
 
+  const [statisticsOpen, setStatisticsOpen] = useState<boolean>(false)
+
   return (
     <Stack spacing={1} height="100%">
       <Head>
         <title>Board {board.name}</title>
       </Head>
-
-      {/* <Accordion>
-        <AccordionSummary
-          expandIcon={<ExpandMoreIcon />}
-          aria-controls="panella-content"
-          id="panella-content"
-        >
-          <Typography>Statistics</Typography>
-        </AccordionSummary>
-        <AccordionSummary>
-          <Grid container>
-            <Grid paddingLeft={"1rem"} item xs={12} md={6}>
-              <DoughnutCard entries={entries} />
-            </Grid>
-            <Grid item xs={12} md={6}>
-              <LineCard entries={entries} />
-            </Grid>
-          </Grid>
-        </AccordionSummary>
-      </Accordion> */}
-      <div style={{ position: "relative", height: "100%" }}>
+      <div style={{ position: "relative", height: "93%" }}>
         <Termynal
           header={
-            <>
-              <Title text={board.name} />
-              <div style={{ paddingRight: "2rem" }}>
+            <Stack direction="row" justifyContent={"space-between"} alignItems={"center"}>
+              <Dots />
+              <Typography color={theme.palette.grey["600"]}>{board.name}</Typography>
+              <div>
                 {mdUp ? (
                   <BoardContextMenu
                     open={open}
@@ -144,7 +128,7 @@ export const Board = () => {
                   </BoardContextDrawer>
                 )}
               </div>
-            </>
+            </Stack>
           }
         >
           {entries.map((entry, index) => (
@@ -153,6 +137,38 @@ export const Board = () => {
             </Plain>
           ))}
         </Termynal>
+        <AccordionSummary
+          expandIcon={<ExpandLessIcon />}
+          aria-controls="panella-content"
+          id="panella-content"
+          onClick={() => {
+            setStatisticsOpen(true)
+          }}
+        >
+          <Typography>Statistics</Typography>
+        </AccordionSummary>
+        <Drawer anchor={"bottom"} open={statisticsOpen} onClose={() => setStatisticsOpen(false)}>
+          <Grid container>
+            <Grid paddingLeft={"1rem"} item xs={12} md={6}>
+              <DoughnutCard entries={entries} />
+            </Grid>
+            <Grid item xs={12} md={6}>
+              <LineCard entries={entries} />
+            </Grid>
+          </Grid>
+        </Drawer>
+        {/* <Accordion>
+          <AccordionSummary>
+            <Grid container>
+              <Grid paddingLeft={"1rem"} item xs={12} md={6}>
+                <DoughnutCard entries={entries} />
+              </Grid>
+              <Grid item xs={12} md={6}>
+                <LineCard entries={entries} />
+              </Grid>
+            </Grid>
+          </AccordionSummary>
+        </Accordion> */}
       </div>
     </Stack>
   )
