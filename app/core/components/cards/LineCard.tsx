@@ -67,7 +67,8 @@ const LineCard = ({ entries }: LineCardProps) => {
     <Paper>
       <CardContent>
         <Box
-          alignItems={"center"}
+          alignItems="center"
+          justifyContent="center"
           sx={{
             display: "flex",
             height: "300px",
