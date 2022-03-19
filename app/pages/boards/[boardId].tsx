@@ -52,11 +52,12 @@ export const Board = () => {
   const [statisticsOpen, setStatisticsOpen] = useState<boolean>(false)
 
   return (
-    <Stack spacing={1} height="100%">
+    <Stack height="100%">
       <Head>
         <title>Board {board.name}</title>
       </Head>
-      <div style={{ position: "relative", height: "93%" }}>
+
+      <div style={{ flexGrow: 1 }}>
         <Termynal
           header={
             <Stack direction="row" justifyContent={"space-between"} alignItems={"center"}>
@@ -137,27 +138,29 @@ export const Board = () => {
             </Plain>
           ))}
         </Termynal>
-        <AccordionSummary
-          expandIcon={<ExpandLessIcon />}
-          aria-controls="panella-content"
-          id="panella-content"
-          onClick={() => {
-            setStatisticsOpen(true)
-          }}
-        >
-          <Typography>Statistics</Typography>
-        </AccordionSummary>
-        <Drawer anchor={"bottom"} open={statisticsOpen} onClose={() => setStatisticsOpen(false)}>
-          <Grid container>
-            <Grid paddingLeft={"1rem"} item xs={12} md={6}>
-              <DoughnutCard entries={entries} />
-            </Grid>
-            <Grid item xs={12} md={6}>
-              <LineCard entries={entries} />
-            </Grid>
+      </div>
+
+      <AccordionSummary
+        expandIcon={<ExpandLessIcon />}
+        aria-controls="panella-content"
+        id="panella-content"
+        onClick={() => {
+          setStatisticsOpen(true)
+        }}
+      >
+        <Typography>Statistics</Typography>
+      </AccordionSummary>
+      <Drawer anchor={"bottom"} open={statisticsOpen} onClose={() => setStatisticsOpen(false)}>
+        <Grid container>
+          <Grid paddingLeft={"1rem"} item xs={12} md={6}>
+            <DoughnutCard entries={entries} />
           </Grid>
-        </Drawer>
-        {/* <Accordion>
+          <Grid item xs={12} md={6}>
+            <LineCard entries={entries} />
+          </Grid>
+        </Grid>
+      </Drawer>
+      {/* <Accordion>
           <AccordionSummary>
             <Grid container>
               <Grid paddingLeft={"1rem"} item xs={12} md={6}>
@@ -169,7 +172,6 @@ export const Board = () => {
             </Grid>
           </AccordionSummary>
         </Accordion> */}
-      </div>
     </Stack>
   )
 }
